@@ -1,917 +1,270 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utkarsh Vaibhav - Web Developer & AI/ML Enthusiast</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.7;
-            color: #2c3e50;
-            background: #0f0f23;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(45deg, #0f0f23, #1a1a3e, #2d2d5f);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 25% 25%, #ff6b6b22 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, #4ecdc422 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, #45b7d122 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
-
-        /* Side Navigation */
-        .side-nav {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 80px;
-            height: 100vh;
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 0;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .nav-link {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #8892b0;
-            text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: #64ffda;
-            background: rgba(100, 255, 218, 0.1);
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
-            color: #64ffda;
-            background: rgba(100, 255, 218, 0.15);
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 80px;
-            min-height: 100vh;
-        }
-
-        /* Hero Section - Left Aligned */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 0 5rem;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 600px;
-            color: white;
-        }
-
-        .hero-greeting {
-            font-size: 1.2rem;
-            color: #64ffda;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .hero-name {
-            font-size: 5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff, #ccd6f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.1;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: #8892b0;
-            line-height: 1.1;
-        }
-
-        .hero-description {
-            font-size: 1.2rem;
-            color: #8892b0;
-            margin-bottom: 3rem;
-            line-height: 1.6;
-            max-width: 500px;
-        }
-
-        .cta-container {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .cta-primary {
-            padding: 15px 30px;
-            background: transparent;
-            color: #64ffda;
-            border: 2px solid #64ffda;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(100, 255, 218, 0.1);
-            transition: left 0.3s ease;
-        }
-
-        .cta-primary:hover::before {
-            left: 0;
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #64ffda;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 5rem;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            color: #ccd6f6;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #64ffda, #45b7d1);
-            border-radius: 2px;
-        }
-
-        /* About/Skills Section */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .about-text {
-            color: #8892b0;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .skills-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            color: #8892b0;
-            font-size: 0.95rem;
-        }
-
-        .skill-item::before {
-            content: '▹';
-            color: #64ffda;
-            margin-right: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .profile-card {
-            background: rgba(100, 255, 218, 0.05);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #64ffda, #45b7d1);
-            border-radius: 15px;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            font-weight: 800;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: rgba(17, 34, 64, 0.8);
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(100, 255, 218, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .project-icon {
-            font-size: 2rem;
-            color: #64ffda;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .project-link {
-            color: #8892b0;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-        }
-
-        .project-link:hover {
-            color: #64ffda;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            color: #ccd6f6;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .project-description {
-            color: #8892b0;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .tech-tag {
-            font-size: 0.85rem;
-            color: #64ffda;
-            background: rgba(100, 255, 218, 0.1);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            border: 1px solid rgba(100, 255, 218, 0.2);
-        }
-
-        /* Stats Section */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(17, 34, 64, 0.6);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #64ffda;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #8892b0;
-            font-weight: 500;
-        }
-
-        /* Contact Section */
-        .contact-container {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact-title {
-            font-size: 3rem;
-            color: #ccd6f6;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        .contact-description {
-            font-size: 1.2rem;
-            color: #8892b0;
-            margin-bottom: 3rem;
-            line-height: 1.6;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .contact-item {
-            background: rgba(17, 34, 64, 0.6);
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(100, 255, 218, 0.4);
-            background: rgba(17, 34, 64, 0.8);
-        }
-
-        .contact-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-label {
-            color: #64ffda;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-value {
-            color: #8892b0;
-            font-size: 0.95rem;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 1024px) {
-            .hero {
-                padding: 0 3rem;
-            }
-
-            .section {
-                padding: 4rem 3rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .hero-name {
-                font-size: 4rem;
-            }
-
-            .hero-title {
-                font-size: 3rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .side-nav {
-                width: 100%;
-                height: 70px;
-                flex-direction: row;
-                padding: 0 1rem;
-                bottom: 0;
-                top: auto;
-                justify-content: space-around;
-            }
-
-            .logo {
-                margin-bottom: 0;
-                margin-right: 0;
-            }
-
-            .nav-links {
-                flex-direction: row;
-                gap: 0;
-                flex: 1;
-                justify-content: space-around;
-            }
-
-            .main-content {
-                margin-left: 0;
-                margin-bottom: 70px;
-            }
-
-            .hero {
-                padding: 0 1.5rem;
-                text-align: left;
-                height: calc(100vh - 70px);
-            }
-
-            .hero-name {
-                font-size: 2.8rem;
-            }
-
-            .hero-title {
-                font-size: 2.2rem;
-            }
-
-            .hero-description {
-                font-size: 1.1rem;
-            }
-
-            .section {
-                padding: 3rem 1.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .skills-list {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-avatar {
-                width: 100px;
-                height: 100px;
-                font-size: 2.5rem;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .stats-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .cta-container {
-                justify-content: center;
-            }
-
-            .scroll-indicator {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-name {
-                font-size: 2.2rem;
-            }
-
-            .hero-title {
-                font-size: 1.8rem;
-            }
-
-            .contact-title {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .project-card, .contact-item, .stat-card {
-                padding: 1.5rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Utkarsh Vaibhav · Full-Stack & AI Developer</title>
+  <meta name="description" content="Utkarsh Vaibhav builds AI-powered web apps: LLM workflows, RAG, full-stack products with Next.js, React, Node.js and FastAPI. B.Tech ECE at SRM University.">
+  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta property="og:title" content="Utkarsh Vaibhav · Full-Stack & AI Developer">
+  <meta property="og:description" content="AI-powered web apps, LLM workflows and the products around them.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/projects/contentspy.webp">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // Apply a saved theme before first paint to avoid a flash
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    document.documentElement.classList.add("js");
+  </script>
 </head>
 <body>
-    <div class="animated-bg"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <nav class="side-nav">
-        <div class="logo">UV</div>
-        <div class="nav-links">
-            <a href="#home" class="nav-link active">🏠</a>
-            <a href="#about" class="nav-link">👨‍💻</a>
-            <a href="#projects" class="nav-link">🚀</a>
-            <a href="#experience" class="nav-link">🏆</a>
-            <a href="#contact" class="nav-link">📧</a>
-        </div>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Utkarsh Vaibhav, home">
+        <span class="brand-mark" aria-hidden="true">UV</span>
+        <span class="brand-name">Utkarsh Vaibhav</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <button class="theme-toggle" type="button" aria-label="Switch colour theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="currentColor"/></svg>
+          </button>
+        </li>
+      </ul>
     </nav>
+  </header>
 
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <div class="hero-greeting">Hi, my name is</div>
-                <h1 class="hero-name">Utkarsh Vaibhav.</h1>
-                <h2 class="hero-title">I build things for the web.</h2>
-                <p class="hero-description">
-                    I'm a passionate web developer and AI/ML enthusiast who loves creating digital solutions that make a difference. Currently focused on building exceptional user experiences with modern technologies.
-                </p>
-                <div class="cta-container">
-                    <a href="#contact" class="cta-primary">Get In Touch</a>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <div>Scroll Down ↓</div>
-            </div>
-        </section>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero container" id="top">
+      <div class="hero-main">
+      <p class="eyebrow">Full-stack &amp; AI developer</p>
+      <h1>I build AI-powered web apps, from the LLM workflow to the product around it.</h1>
+      <p class="hero-sub">Next.js, React, Node.js and FastAPI on the product side; LLM integration, tool-calling and RAG on the AI side. B.Tech ECE student at SRM University and Software Development Intern at ASA Industries.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">View projects</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+      <ul class="hero-links" aria-label="Profiles">
+        <li><a href="https://github.com/Utkarsh151-glitch" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/utkarsh-vaibhav-76aa99300/" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:utkarshvaibhav786@gmail.com">Email</a></li>
+      </ul>
+      </div>
+      <aside class="hero-card" aria-label="Highlights">
+        <p class="card-label">Now building</p>
+        <p class="card-title">Devoploy</p>
+        <p class="card-text">An AI agent that reads failed CI runs, proposes a fix and opens a pull request.</p>
+        <p class="card-label">Live projects</p>
+        <ul class="card-links">
+          <li><a href="https://contentspy-ai.vercel.app" rel="noopener">ContentSpy AI</a><span>LLM + web search</span></li>
+          <li><a href="https://barclays-predelinquency.vercel.app" rel="noopener">Pre-Delinquency Risk</a><span>ML + FastAPI</span></li>
+          <li><a href="https://project-zenith-eight-mauve.vercel.app" rel="noopener">Project Zenith</a><span>3D + live data</span></li>
+        </ul>
+      </aside>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="section">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-            </div>
-            <div class="about-grid">
-                <div>
-                    <div class="about-text">
-                        <p>Hello! I'm Utkarsh, a B.Tech student at <strong style="color: #64ffda;">SRM University</strong>, pursuing Electronics and Communication Engineering with specialization in <strong style="color: #64ffda;">VLSI and Digital Technology</strong>. My journey combines both hardware and software development, creating a unique perspective in technology.</p>
-                        
-                        <p>I enjoy turning ideas into reality through clean, efficient code and innovative hardware solutions. My experience spans from web development and AI/ML projects to electronics hardware design, including IoT devices and sensor systems.</p>
+    <!-- About -->
+    <section class="section container" id="about" aria-labelledby="about-title">
+      <h2 class="section-title" id="about-title">About</h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>I'm Utkarsh, an Electronics and Communication Engineering student at SRM University, specialising in VLSI and Digital Technology. I like building things end to end: the interface, the API, the data model and, more and more, the AI layer that ties them together.</p>
+          <p>At ASA Industries, an electric motor manufacturer, I replaced a 141-column Excel workflow with a production ERP and built a KPI system that computes department metrics straight from company data. That work taught me to check numbers before trusting them, a habit I bring to every project.</p>
+          <p>Right now I'm focused on agentic AI: LLMs that call tools, search the web and act on code. I'm looking for internships where I can build AI products that real people use.</p>
+        </div>
+        <aside class="facts reveal" aria-label="Quick facts">
+          <dl>
+            <div><dt>Education</dt><dd>B.Tech ECE, SRM University (SRM KTR), Chennai · 2028 · CGPA 8.35/10</dd></div>
+            <div><dt>Now</dt><dd>Software Development Intern, ASA Industries</dd></div>
+            <div><dt>Based in</dt><dd>Chennai, India</dd></div>
+            <div><dt>Interests</dt><dd>Agentic AI, full-stack products, data pipelines, IoT</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
 
-                        <p>Here are a few technologies I've been working with recently:</p>
-                    </div>
-                    <div class="skills-list">
-                        <div class="skill-item">JavaScript (ES6+)</div>
-                        <div class="skill-item">React.js</div>
-                        <div class="skill-item">Node.js</div>
-                        <div class="skill-item">Python</div>
-                        <div class="skill-item">Machine Learning</div>
-                        <div class="skill-item">VLSI Design</div>
-                        <div class="skill-item">IoT Development</div>
-                        <div class="skill-item">Electronics Hardware</div>
-                    </div>
-                </div>
-                <div class="profile-card">
-                    <div class="profile-avatar">UV</div>
-                    <h3 style="color: #64ffda; margin-bottom: 0.5rem;">ECE Student & Developer</h3>
-                    <p style="color: #8892b0; margin-bottom: 0.5rem;">SRM University</p>
-                    <p style="color: #8892b0; font-size: 0.9rem;">Bridging hardware and software 🔧💻</p>
-                </div>
-            </div>
-        </section>
+    <!-- Skills -->
+    <section class="section container" id="skills" aria-labelledby="skills-title">
+      <h2 class="section-title" id="skills-title">Skills</h2>
+      <div class="skill-ai reveal">
+        <h3>AI &amp; agentic AI</h3>
+        <ul class="skill-list">
+          <li><strong>LLM integration:</strong> OpenAI API, Google Gemini, local models with Ollama, Puter.js multi-model access <span class="where">ContentSpy, Mood DJ, AI Algorithm Tutor</span></li>
+          <li><strong>Tool-using agents:</strong> LLM calls with web search, model fallback chains, structured JSON output with repair <span class="where">ContentSpy</span></li>
+          <li><strong>Code agents:</strong> a GitHub App that parses CI failures, proposes fixes and opens pull requests <span class="where">Devoploy (in progress)</span></li>
+          <li><strong>RAG:</strong> OpenAI embeddings stored in Postgres with pgvector, retrieved for grounded answers <span class="where">Devoploy</span></li>
+          <li><strong>Machine learning:</strong> scikit-learn, XGBoost, feature engineering, MLflow tracking <span class="where">Pre-Delinquency Risk</span></li>
+        </ul>
+      </div>
+      <div class="skill-grid">
+        <div class="skill-card reveal">
+          <h3>Languages</h3>
+          <ul class="chips"><li>TypeScript</li><li>JavaScript</li><li>Python</li><li>Java</li><li>SQL</li><li>C++ (Arduino)</li><li>HTML/CSS</li></ul>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Frontend</h3>
+          <ul class="chips"><li>React</li><li>Next.js</li><li>React Native (Expo)</li><li>Tailwind CSS</li><li>Framer Motion</li><li>shadcn/ui</li><li>Recharts</li><li>Vite</li></ul>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Backend</h3>
+          <ul class="chips"><li>Node.js</li><li>Express</li><li>FastAPI</li><li>Next.js API routes</li><li>Prisma</li><li>BullMQ</li><li>REST APIs</li></ul>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Data</h3>
+          <ul class="chips"><li>PostgreSQL</li><li>MongoDB</li><li>MySQL</li><li>Redis</li><li>pandas</li><li>NumPy</li><li>Excel modelling</li></ul>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Tools &amp; cloud</h3>
+          <ul class="chips"><li>Git &amp; GitHub</li><li>GitHub Actions</li><li>Docker</li><li>Vercel</li><li>Render</li><li>Maven</li></ul>
+        </div>
+        <div class="skill-card reveal">
+          <h3>IoT &amp; hardware</h3>
+          <ul class="chips"><li>ESP8266 (NodeMCU)</li><li>DHT sensors</li><li>PlatformIO</li><li>Arduino</li></ul>
+        </div>
+      </div>
+    </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="section">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">🩺</div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">🔗</a>
-                            <a href="#" class="project-link">📱</a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Early Diabetes Predictor</h3>
-                    <p class="project-description">
-                        An AI-powered healthcare application that analyzes patient data to predict early signs of diabetes. Built with machine learning algorithms and a user-friendly interface for healthcare professionals.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Machine Learning</span>
-                        <span class="tech-tag">Flask</span>
-                        <span class="tech-tag">Data Analysis</span>
-                    </div>
-                </div>
+    <!-- Projects -->
+    <section class="section container" id="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title">Projects</h2>
+      <div class="project-grid">
+        <article class="project reveal">
+          <img src="assets/images/projects/contentspy.webp" alt="ContentSpy AI dashboard with a competitor URL input" width="960" height="600" loading="lazy">
+          <div class="project-body">
+            <h3>ContentSpy AI</h3>
+            <p>Paste a competitor's URL and get an AI-written intelligence report: SEO keywords, content gaps, weaknesses and a market-entry plan. An LLM with web search does the research; reports are saved per user and export to PDF.</p>
+            <ul class="tags"><li>Next.js</li><li>TypeScript</li><li>Puter.js</li><li>Tailwind</li></ul>
+            <p class="project-links"><a href="https://contentspy-ai.vercel.app" rel="noopener">Live demo</a><a href="https://github.com/Utkarsh151-glitch/contentspy-ai" rel="noopener">Code</a></p>
+          </div>
+        </article>
 
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">🛒</div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">🔗</a>
-                            <a href="#" class="project-link">📱</a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">WhatsApp E-commerce Platform</h3>
-                    <p class="project-description">
-                        Revolutionary e-commerce solution integrated with WhatsApp for seamless shopping experiences. Features include automated customer service, order tracking, and real-time inventory management.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">WhatsApp API</span>
-                        <span class="tech-tag">Express.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <article class="project reveal">
+          <img src="assets/images/projects/predelinquency.webp" alt="Risk Intelligence Command Center dashboard with risk distribution and model metrics" width="960" height="600" loading="lazy">
+          <div class="project-body">
+            <p class="badges"><span class="badge">Simulated data</span></p>
+            <h3>Pre-Delinquency Risk Intelligence</h3>
+            <p>An early-warning system that flags repayment stress before default: 16 behavioural signals from six months of banking activity, a Random Forest scorer, a FastAPI + MongoDB API and a React dashboard.</p>
+            <ul class="tags"><li>FastAPI</li><li>scikit-learn</li><li>MongoDB</li><li>React</li></ul>
+            <p class="project-links"><a href="https://barclays-predelinquency.vercel.app" rel="noopener">Live demo</a><a href="https://github.com/Utkarsh151-glitch/BARCLAYS-PREDELINQUENCY" rel="noopener">Code</a></p>
+          </div>
+        </article>
 
-        <!-- Experience Section -->
-        <section id="experience" class="section">
-            <div class="section-header">
-                <h2 class="section-title">Hackathon Experience</h2>
-            </div>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <span class="stat-number">5</span>
-                    <div class="stat-label">Hackathons Participated</div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">2</span>
-                    <div class="stat-label">Second Rounds Qualified</div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">40%</span>
-                    <div class="stat-label">Success Rate</div>
-                </div>
-            </div>
-            <div style="margin-top: 3rem; text-align: center;">
-                <p style="color: #8892b0; font-size: 1.1rem; line-height: 1.6; max-width: 600px; margin: 0 auto;">
-                    Passionate about competitive programming and collaborative problem-solving. I thrive in hackathon environments where creativity meets technical skills, consistently delivering innovative solutions under pressure.
-                </p>
-            </div>
-        </section>
+        <article class="project reveal">
+          <img src="assets/images/projects/zenith.webp" alt="Project Zenith landing page with a 3D globe and star field" width="960" height="600" loading="lazy">
+          <div class="project-body">
+            <p class="badges"><span class="badge">Team project · ASTRALWEB'26</span></p>
+            <h3>Project Zenith</h3>
+            <p>An AI-powered digital observatory: live ISS position, satellites, planetary positions from NASA Horizons and an AI narrator, in an immersive 3D interface. <em>My part:</em> the Next.js frontend, 3D scenes, Cesium globe and deployment.</p>
+            <ul class="tags"><li>Next.js</li><li>Three.js</li><li>CesiumJS</li><li>FastAPI</li></ul>
+            <p class="project-links"><a href="https://project-zenith-eight-mauve.vercel.app" rel="noopener">Live demo</a><a href="https://github.com/Utkarsh151-glitch/project-zenith" rel="noopener">Code</a></p>
+          </div>
+        </article>
 
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-            </div>
-            <div class="contact-container">
-                <h3 class="contact-title">Let's Build Something Together</h3>
-                <p class="contact-description">
-                    I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology. Feel free to reach out!
-                </p>
-                <div class="contact-grid">
-                    <a href="mailto:utkarshvaibhav354@gmail.com" class="contact-item">
-                        <span class="contact-icon">📧</span>
-                        <div class="contact-label">Email</div>
-                        <div class="contact-value">utkarshvaibhav354@gmail.com</div>
-                    </a>
-                    <a href="tel:+917970316509" class="contact-item">
-                        <span class="contact-icon">📱</span>
-                        <div class="contact-label">Phone</div>
-                        <div class="contact-value">+91 7970316509</div>
-                    </a>
-                    <a href="https://www.linkedin.com/in/utkarsh-vaibhav-76aa99300/" target="_blank" class="contact-item">
-                        <span class="contact-icon">💼</span>
-                        <div class="contact-label">LinkedIn</div>
-                        <div class="contact-value">Professional Profile</div>
-                    </a>
-                    <a href="https://github.com/Utkarsh151-glitch" target="_blank" class="contact-item">
-                        <span class="contact-icon">🐙</span>
-                        <div class="contact-label">GitHub</div>
-                        <div class="contact-value">Code Repository</div>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
+        <article class="project project-text reveal">
+          <div class="project-body">
+            <p class="badges"><span class="badge badge-progress">In progress</span></p>
+            <h3>Devoploy</h3>
+            <p>A GitHub App agent for broken deployments: it clones the repo, parses CI and build failures, proposes a fix with an LLM and opens a pull request. Documentation search uses RAG over OpenAI embeddings in Postgres (pgvector). A worker on BullMQ and Redis runs the jobs.</p>
+            <ul class="tags"><li>TypeScript</li><li>Next.js</li><li>BullMQ</li><li>pgvector</li><li>OpenAI</li></ul>
+            <p class="project-links"><a href="https://github.com/Utkarsh151-glitch/Devoploy" rel="noopener">Code</a></p>
+          </div>
+        </article>
 
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        <article class="project reveal">
+          <img src="assets/images/projects/ai-tutor.webp" alt="AI Algorithm Tutor home screen with A* and alpha-beta modules" width="960" height="600" loading="lazy">
+          <div class="project-body">
+            <h3>AI Algorithm Tutor</h3>
+            <p>A React Native app that animates A* pathfinding and alpha-beta pruning step by step, with explanations from a local LLM served by Ollama, so it works offline.</p>
+            <ul class="tags"><li>React Native</li><li>Expo</li><li>Express</li><li>Ollama</li></ul>
+            <p class="project-links"><a href="https://github.com/Utkarsh151-glitch/AI--Tutor" rel="noopener">Code</a></p>
+          </div>
+        </article>
 
-        // Active nav link
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
+        <article class="project reveal">
+          <img src="assets/images/projects/cgpower.webp" alt="Reverse DCF heatmap of value per share by revenue growth and cash-flow margin" width="960" height="600" loading="lazy">
+          <div class="project-body">
+            <p class="badges"><span class="badge">Equity research</span></p>
+            <h3>CG Power: Initiating Coverage</h3>
+            <p>A full equity-research report with an Excel model (DCF, reverse DCF, peer comps, commodity sensitivity) and a Python script that rebuilds every valuation output and checks it against Excel.</p>
+            <ul class="tags"><li>Python</li><li>Excel</li><li>Matplotlib</li><li>Valuation</li></ul>
+            <p class="project-links"><a href="https://utkarsh151-glitch.github.io/cgpower-research/" rel="noopener">Read it</a><a href="https://github.com/Utkarsh151-glitch/cgpower-research" rel="noopener">Code</a></p>
+          </div>
+        </article>
+      </div>
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
+      <h3 class="more-title">More projects</h3>
+      <ul class="more-list">
+        <li class="reveal"><a href="https://github.com/Utkarsh151-glitch/MOOD-DJ" rel="noopener"><strong>Mood DJ</strong><span>Upload tracks, describe a mood, get an AI-picked mix. Next.js, Prisma, PostgreSQL, OpenAI</span></a></li>
+        <li class="reveal"><a href="https://github.com/Utkarsh151-glitch/Swiftrelieve" rel="noopener"><strong>SwiftRelief</strong><span>Disaster-relief coordination desktop app (hackathon). JavaFX, MySQL</span></a></li>
+        <li class="reveal"><a href="https://github.com/Utkarsh151-glitch/ESP-PROJECT-TEMPREATURE-SENSOR-" rel="noopener"><strong>ESP8266 climate monitor</strong><span>DHT11 temperature and humidity firmware with CI builds. C++, PlatformIO</span></a></li>
+        <li class="reveal"><a href="https://github.com/Utkarsh151-glitch/quizapp" rel="noopener"><strong>Quiz App</strong><span>Timed multiple-choice quiz with instant feedback. React</span></a></li>
+      </ul>
+    </section>
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+    <!-- Experience -->
+    <section class="section container" id="experience" aria-labelledby="experience-title">
+      <h2 class="section-title" id="experience-title">Experience</h2>
+      <ol class="timeline">
+        <li class="reveal">
+          <div class="when">May 2026 – Present</div>
+          <h3>Software Development Intern · ASA Industries</h3>
+          <p class="where-line">Data, ERP &amp; KPI systems · Uttar Pradesh</p>
+          <ul>
+            <li>Built a production ERP for an electric motor manufacturer, replacing a 141-column Excel workflow across 5 departments (React, Node.js/Express, MongoDB Atlas).</li>
+            <li>Audited the legacy workbooks, rebuilt their calculations from raw inputs and reconciled every output; end-to-end tests across 6 modules showed zero inventory reconciliation drift.</li>
+            <li>Building a KPI system in Python that computes 83 department KPIs directly from company data, replacing hand-typed scores.</li>
+          </ul>
+        </li>
+        <li class="reveal">
+          <div class="when">Sep 2025 – Nov 2025</div>
+          <h3>Backend Developer Intern · Yuva</h3>
+          <ul>
+            <li>Built and documented REST APIs for e-commerce and blogging systems on Node.js and MySQL; load-tested with JMeter and cut API latency by 30%.</li>
+          </ul>
+        </li>
+        <li class="reveal">
+          <div class="when">Hackathons</div>
+          <h3>5 hackathons, second round in 2</h3>
+          <ul>
+            <li>Project Zenith for ASTRALWEB'26 with Team DO BRONXS; SwiftRelief, where I led backend and database integration.</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+    <!-- Contact -->
+    <section class="section container contact" id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contact</h2>
+      <p class="contact-lead reveal">Open to internships in AI and full-stack development. The fastest way to reach me is email.</p>
+      <div class="contact-actions reveal">
+        <a class="btn btn-primary" href="mailto:utkarshvaibhav786@gmail.com">utkarshvaibhav786@gmail.com</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/utkarsh-vaibhav-76aa99300/" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/Utkarsh151-glitch" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  </main>
 
-        // Apply animation to elements
-        document.querySelectorAll('.project-card, .stat-card, .contact-item, .about-grid > *').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
+  <footer class="site-footer">
+    <div class="container">© <span id="year">2026</span> Utkarsh Vaibhav</div>
+  </footer>
 
-        // Typing effect for hero
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize typing effect
-        window.addEventListener('load', () => {
-            const heroName = document.querySelector('.hero-name');
-            const heroTitle = document.querySelector('.hero-title');
-            
-            setTimeout(() => {
-                typeWriter(heroName, 'Utkarsh Vaibhav.', 100);
-            }, 500);
-            
-            setTimeout(() => {
-                typeWriter(heroTitle, 'I build things for the web.', 80);
-            }, 3000);
-        });
-    </script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
